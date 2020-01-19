@@ -33,11 +33,11 @@
                                    unit:stepsUnit
                                     day:date
                              completion:^(double value, NSDate *startDate, NSDate *endDate, NSError *error) {
-        if (!value) {
-            NSLog(@"could not fetch step count for day: %@", error);
-            callback(@[RCTMakeError(@"could not fetch step count for day", error, nil)]);
-            return;
-        }
+        // if (!value) {
+        //     NSLog(@"could not fetch step count for day: %@", error);
+        //     callback(@[RCTMakeError(@"could not fetch step count for day", error, nil)]);
+        //     return;
+        // }
 
          NSDictionary *response = @{
                  @"value" : @(value),
@@ -57,9 +57,9 @@
     NSString *type = [RCTAppleHealthKit stringFromOptions:input key:@"type" withDefault:@"Walking"];
     NSDate *startDate = [RCTAppleHealthKit dateFromOptions:input key:@"startDate" withDefault:[NSDate date]];
     NSDate *endDate = [RCTAppleHealthKit dateFromOptions:input key:@"endDate" withDefault:[NSDate date]];
-    
+
     NSPredicate *predicate = [HKQuery predicateForSamplesWithStartDate:startDate endDate:endDate options:HKQueryOptionStrictStartDate];
-    
+
     HKSampleType *samplesType = [RCTAppleHealthKit hkQuantityTypeFromString:type];
     if ([type isEqual:@"Running"] || [type isEqual:@"Cycling"]) {
         unit = [HKUnit mileUnit];
@@ -86,12 +86,12 @@
 {
     HKUnit *unit = [RCTAppleHealthKit hkUnitFromOptions:input key:@"unit" withDefault:[HKUnit countUnit]];
     NSString *type = [RCTAppleHealthKit stringFromOptions:input key:@"type" withDefault:@"Walking"];
-    
+
     HKSampleType *samplesType = [RCTAppleHealthKit hkQuantityTypeFromString:type];
     if ([type isEqual:@"Running"] || [type isEqual:@"Cycling"]) {
         unit = [HKUnit mileUnit];
     }
-    
+
     [self setObserverForType:samplesType unit:unit];
 }
 
@@ -194,11 +194,11 @@
     HKQuantityType *quantityType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWalkingRunning];
 
     [self fetchSumOfSamplesOnDayForType:quantityType unit:unit day:date completion:^(double distance, NSDate *startDate, NSDate *endDate, NSError *error) {
-        if (!distance) {
-            NSLog(@"ERROR getting DistanceWalkingRunning: %@", error);
-            callback(@[RCTMakeError(@"ERROR getting DistanceWalkingRunning", error, nil)]);
-            return;
-        }
+        // if (!distance) {
+        //     NSLog(@"ERROR getting DistanceWalkingRunning: %@", error);
+        //     callback(@[RCTMakeError(@"ERROR getting DistanceWalkingRunning", error, nil)]);
+        //     return;
+        // }
 
         NSDictionary *response = @{
                 @"value" : @(distance),
@@ -222,9 +222,9 @@
         callback(@[RCTMakeError(@"startDate is required in options", nil, nil)]);
         return;
     }
-    
+
     HKQuantityType *quantityType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWalkingRunning];
-    
+
     [self fetchCumulativeSumStatisticsCollection:quantityType
                                             unit:unit
                                        startDate:startDate
@@ -276,9 +276,9 @@
         callback(@[RCTMakeError(@"startDate is required in options", nil, nil)]);
         return;
     }
-    
+
     HKQuantityType *quantityType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceCycling];
-    
+
     [self fetchCumulativeSumStatisticsCollection:quantityType
                                             unit:unit
                                        startDate:startDate
@@ -330,9 +330,9 @@
         callback(@[RCTMakeError(@"startDate is required in options", nil, nil)]);
         return;
     }
-    
+
     HKQuantityType *quantityType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed];
-    
+
     [self fetchCumulativeSumStatisticsCollection:quantityType
                                             unit:unit
                                        startDate:startDate
