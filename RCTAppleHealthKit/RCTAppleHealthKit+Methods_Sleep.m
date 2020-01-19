@@ -24,24 +24,24 @@
         callback(@[RCTMakeError(@"startDate is required in options", nil, nil)]);
         return;
     }
-    
+
     NSPredicate *predicate = [RCTAppleHealthKit predicateForSamplesBetweenDates:startDate endDate:endDate];
     NSUInteger limit = [RCTAppleHealthKit uintFromOptions:input key:@"limit" withDefault:HKObjectQueryNoLimit];
-    
-    
+
+
     [self fetchSleepCategorySamplesForPredicate:predicate
                                           limit:limit
                                      completion:^(NSArray *results, NSError *error) {
-                                         if(results){
+                                        //  if(results){
                                              callback(@[[NSNull null], results]);
                                              return;
-                                         } else {
-                                             NSLog(@"error getting sleep samples: %@", error);
-                                             callback(@[RCTMakeError(@"error getting sleep samples", nil, nil)]);
-                                             return;
-                                         }
+                                        //  } else {
+                                        //      NSLog(@"error getting sleep samples: %@", error);
+                                        //      callback(@[RCTMakeError(@"error getting sleep samples", nil, nil)]);
+                                        //      return;
+                                        //  }
                                      }];
-    
+
 }
 
 
